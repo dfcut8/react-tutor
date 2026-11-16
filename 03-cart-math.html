@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Card</title>
+</head>
+
+<body>
+  <button onclick='console.log(itemsCount);'>Show</button>
+  <button onclick='itemsCount++;'>Add</button>
+  <button onclick="itemsCount += 2;">Add +2</button>
+  <button onclick="itemsCount += 3;">Add +3</button>
+  <button onclick="console.log('Was reset'); itemsCount = 0;">Reset</button>
+  <div class="card">Items</div>
+  <script>
+    let itemsCount = 0;
+  </script>
+</body>
+
+</html>
