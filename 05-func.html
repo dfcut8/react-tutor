@@ -10,9 +10,10 @@
     f1();
     f1(1, 2);
     const result = f1("a", "b");
+    f1("c");
     console.log(`result: ${result}`);
 
-    function f1(a1, a2) {
+    function f1(a1, a2 = "b") {
       console.log("Right...");
       console.log(a1 + a2);
       return a1 + a2;
