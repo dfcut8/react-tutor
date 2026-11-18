@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Project #1</title>
+</head>
+
+<body>
+  <p>YouTube Subscribe Button</p>
+  <button id="js-youtube-subscribe-button" onclick="handleSubscribeButton()">Subscribe</button>
+  <script>
+    function handleSubscribeButton() {
+      const youTubeSubscribeButton = document.querySelector("#js-youtube-subscribe-button");
+      // console.log(youTubeSubscribeButton);
+      if (youTubeSubscribeButton.innerText === "Subscribe") {
+        youTubeSubscribeButton.innerText = "subscribed!!!".toUpperCase();
+      }
+    }
+  </script>
+</body>
+
+</html>
