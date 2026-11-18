@@ -7,23 +7,36 @@
 
 <body>
   <script>
-    let person = JSON.parse(localStorage.getItem("person")) || { name: "bla", age: 15 };
-    console.log(`person from localstorage: name: ${person.name}.`);
-    const product = {
-      name: 'socks',
-      price: 1090,
-      sayMyName: () => {
-        console.log("I'm SOCKS!");
-      }
+    // let person = JSON.parse(localStorage.getItem("person")) || { name: "bla", age: 15 };
+    // console.log(`person from localstorage: name: ${person.name}.`);
+    // const product = {
+    //   name: 'socks',
+    //   price: 1090,
+    //   sayMyName: () => {
+    //     console.log("I'm SOCKS!");
+    //   }
+    // }
+    // console.log(product);
+    // product.name = 'super socks';
+    // console.log(product.name);
+    // product.sayMyName();
+    // let jP = JSON.stringify(product);
+    // console.log(jP);
+    // console.log(person);
+    // localStorage.setItem("person", JSON.stringify(person));
+    console.log("hello".toUpperCase());
+    const o1 = {
+      message: "hello"
     }
-    console.log(product);
-    product.name = 'super socks';
-    console.log(product.name);
-    product.sayMyName();
-    let jP = JSON.stringify(product);
-    console.log(jP);
-    console.log(person);
-    localStorage.setItem("person", JSON.stringify(person));
+    o2 = o1;
+    o2.message = "buy";
+    console.log(o1.message);
+    const o4 = {
+      name: "blue",
+      age: 12
+    }
+    const { name, age } = o4;
+    console.log(name, age);
   </script>
 </body>
 
