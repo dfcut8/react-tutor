@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Project #3</title>
+</head>
+
+<body>
+  <p>Amazon Shipping Calc</p>
+  <div id="errors" hidden="true" style="color: red;"></div>
+  <div>Orders below $40 = +$10 shipping.</div>
+  <div>Orders over $40 = Free shipping.</div>
+  <input id="price-input" value="Enter price here"></input>
+  <button id="price-check-button" onclick="handlePriceCheck()">Check</button>
+  <p>Result:</p>
+  <div id="result"></div>
+  <script>
+    function handlePriceCheck() {
+      const errorsField = document.querySelector("#errors")
+      const resultField = document.querySelector("#result")
+      const priceToCheck = Number(document.querySelector("#price-input").value);
+      if (Number.isNaN(priceToCheck)) {
+        console.log("Can't convert string to number!");
+        errorsField.innerHTML = "Can't convert string to number!";
+        errorsField.hidden = false;
+        return;
+      }
+      let result = 0;
+      if (priceToCheck < 40) {
+        result = priceToCheck + 10;
+      } else {
+        result = priceToCheck;
+      }
+      resultField.innerHTML = result;
+    }
+  </script>
+</body>
+
+</html>
