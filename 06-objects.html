@@ -9,11 +9,20 @@
   <script>
     const product = {
       name: 'socks',
-      price: 1090
+      price: 1090,
+      sayMyName: () => {
+        console.log("I'm SOCKS!");
+      }
     }
     console.log(product);
     product.name = 'super socks';
     console.log(product.name);
+    product.sayMyName();
+    let jP = JSON.stringify(product);
+    console.log(jP);
+    let sPerson = '{"name": "alex", "age": 25}'
+    let person = JSON.parse(sPerson);
+    console.log(person);
   </script>
 </body>
 
