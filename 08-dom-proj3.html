@@ -10,11 +10,18 @@
   <div id="errors" hidden="true" style="color: red;"></div>
   <div>Orders below $40 = +$10 shipping.</div>
   <div>Orders over $40 = Free shipping.</div>
-  <input id="price-input" value="Enter price here"></input>
+  <input id="price-input" value="Enter price here" onkeydown="handleKeyDown(event)"></input>
   <button id="price-check-button" onclick="handlePriceCheck()">Check</button>
   <p>Result:</p>
   <div id="result"></div>
   <script>
+    function handleKeyDown(e) {
+      console.log(e.key);
+      if (e.key === "Enter") {
+        handlePriceCheck();
+      }
+    }
+
     function handlePriceCheck() {
       const errorsField = document.querySelector("#errors")
       const resultField = document.querySelector("#result")
