@@ -37,6 +37,16 @@
     }
     const { name, age } = o4;
     console.log(name, age);
+
+    const o5 = {
+      name: "ooo",
+      age: 1,
+      sayMyNormalName() {
+        console.log(`My name IS ${this.name}`);
+      }
+    }
+    console.log(o5);
+    o5.sayMyNormalName();
   </script>
 </body>
 
