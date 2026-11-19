@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./public/Inter.ttf");
+}
+
+body {
+  font-family: "Inter";
+}
