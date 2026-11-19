@@ -32,13 +32,15 @@ function refreshList() {
   const e = document.querySelector(".js-list");
   let list = "";
   todoList.forEach((element, ind) => {
+
     list += `
-    <p>
-      [${element.id}] ${element.title} ${element.due != "" ? `(${element.due})` : ""}
+      <div>[${element.id}]</div>
+      <div>${element.title}</div>
+      <div>${element.due != "" ? `(${element.due})` : ""}</div>
       <button class="todo-delete" id=${ind} onclick="handleDelete(${ind})">
         DELETE
       </button>
-    </p>`;
+    `;
   });
   e.innerHTML = list;
 }

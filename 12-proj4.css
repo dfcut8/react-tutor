@@ -6,3 +6,8 @@
 body {
   font-family: "Inter";
 }
+
+.todo-grid {
+  display: grid;
+  grid-template-columns: 350px 150px 100px 100px;
+}
