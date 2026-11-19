@@ -3,17 +3,44 @@
 
 <head>
   <title>Project #1</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .subscribe-button {
+      border: none;
+      color: white;
+      background-color: black;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 15px;
+      padding-right: 15px;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+
+    .is-subscribed {
+      background-color: rgb(240, 240, 240);
+      color: black;
+    }
+  </style>
 </head>
 
 <body>
   <p>YouTube Subscribe Button</p>
-  <button id="js-youtube-subscribe-button" onclick="handleSubscribeButton()">Subscribe</button>
+  <button class="subscribe-button" id="js-youtube-subscribe-button" onclick="handleSubscribeButton()">Subscribe</button>
   <script>
     function handleSubscribeButton() {
       const youTubeSubscribeButton = document.querySelector("#js-youtube-subscribe-button");
-      // console.log(youTubeSubscribeButton);
       if (youTubeSubscribeButton.innerText === "Subscribe") {
-        youTubeSubscribeButton.innerText = "subscribed!!!".toUpperCase();
+        youTubeSubscribeButton.innerText = "Subscribed!!!";
+        youTubeSubscribeButton.classList.add("is-subscribed");
+      } else {
+        youTubeSubscribeButton.classList.remove("is-subscribed");
+        youTubeSubscribeButton.innerText = "Subscribe";
       }
     }
   </script>
