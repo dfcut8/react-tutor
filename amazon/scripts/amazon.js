@@ -65,6 +65,7 @@ document.querySelectorAll(".js-add-to-cart-button").forEach(b => {
     } else {
       cart.push({ productId: b.dataset.productId, quantity: 1 });
     }
-    console.log(cart);
+    document.querySelector(".cart-quantity").innerHTML = getTotalItemsInCart();
+
   });
 })
