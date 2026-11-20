@@ -48,7 +48,9 @@ products.forEach(p => {
             Added
           </div>
 
-          <button class="js-add-to-cart-button add-to-cart-button button-primary">
+          <button
+            class="js-add-to-cart-button add-to-cart-button button-primary"
+            data-product-id="${p.id}">
             Add to Cart
           </button>
         </div>`
@@ -56,6 +58,7 @@ products.forEach(p => {
 
 document.querySelectorAll(".js-add-to-cart-button").forEach(b => {
   b.addEventListener("click", () => {
-    console.log("add button clicked!");
+    cart.push({ productId: b.dataset.productId, quantity: 1 });
+    console.log(cart);
   });
 })
