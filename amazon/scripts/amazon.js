@@ -28,10 +28,10 @@ const products = [
   }
 ];
 
-const productsRootHTLM = document.querySelector(".products-grid");
+const productsRoot = document.querySelector(".js-products-grid");
 
 products.forEach(p => {
-  productsRootHTLM.innerHTML += `
+  productsRoot.innerHTML += `
         <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -51,7 +51,7 @@ products.forEach(p => {
           </div>
 
           <div class="product-price">
-            $${p.price / 100}
+            $${(p.price / 100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
