@@ -2,14 +2,10 @@ import products from "../data/products.js";
 import { cart, removeItemFromCartByProductId } from "./cart.js";
 import { formatCurrency } from "./utils/money.js";
 
-refreshCheckout();
-
-function refreshCheckout() {
-  const orderSummaryRoot = document.querySelector(".js-order-summary");
-  orderSummaryRoot.innerHTML = "";
-  cart.forEach(item => {
-    const p = products.find(x => x.id === item.productId);
-    orderSummaryRoot.innerHTML += `<div class="cart-item-container">
+const orderSummaryRoot = document.querySelector(".js-order-summary");
+cart.forEach(item => {
+  const p = products.find(x => x.id === item.productId);
+  orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.id}">
           <div class="delivery-date">
             Delivery date: Wednesday, June 15
           </div>
@@ -80,11 +76,11 @@ function refreshCheckout() {
             </div>
           </div>
         </div>`
-  });
-}
+});
 
 const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
 deleteButtons.forEach(b => b.addEventListener("click", () => {
-  removeItemFromCartByProductId(b.dataset.productId);
-  refreshCheckout();
+  const productId = b.dataset.productId
+  removeItemFromCartByProductId(productId);
+  document.querySelectorAll(`.js-cart-item-container-${productId}`).forEach(e => e.remove());
 }))
