@@ -1,4 +1,4 @@
-let cart = JSON.parse(localStorage.getItem("amazon-cart"));
+export let cart = JSON.parse(localStorage.getItem("amazon-cart"));
 if (cart === null) {
   cart = [];
 }
@@ -10,13 +10,12 @@ export function addItemToCartByProductId(productId) {
   } else {
     cart.push({ productId: productId, quantity: 1 });
   }
-  localStorage.setItem("amazon-cart", JSON.stringify(cart));
+  saveCart();
 }
 
-export function getItems() {
-
-  return cart;
-}
+// export function getItems() {
+//   return cart;
+// }
 
 export function getItemFromCartByProductId(id) {
   return cart.find(x => x.productId == id)
@@ -32,4 +31,9 @@ export function removeItemFromCartByProductId(productId) {
   if (index !== -1) {
     cart.splice(index, 1);
   }
+  saveCart();
+}
+
+function saveCart() {
+  localStorage.setItem("amazon-cart", JSON.stringify(cart));
 }
