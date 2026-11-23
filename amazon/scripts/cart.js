@@ -1,9 +1,9 @@
-const cart = [];
+export const cart = [];
 
-function getProductById(id) {
+export function getProductById(id) {
   return cart.find(x => x.productId == id)
 }
 
-function getTotalItemsInCart() {
+export function getTotalItemsInCart() {
   return cart.reduce((total, item) => total + item.quantity, 0);
 }

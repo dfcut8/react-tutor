@@ -1,4 +1,5 @@
-
+import products from "../data/products.js";
+import { cart, getProductById, getTotalItemsInCart } from './cart.js';
 
 const productsRoot = document.querySelector(".js-products-grid");
 
