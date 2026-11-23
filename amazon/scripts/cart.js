@@ -1,13 +1,22 @@
-export const cart = [
-  {
-    productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    quantity: 20
-  },
-  {
-    productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    quantity: 5
+let cart = JSON.parse(localStorage.getItem("amazon-cart"));
+if (cart === null) {
+  cart = [];
+}
+
+export function addItemToCartByProductId(productId) {
+  const item = cart.find(x => x.productId === productId);
+  if (item) {
+    item.quantity++;
+  } else {
+    cart.push({ productId: productId, quantity: 1 });
   }
-];
+  localStorage.setItem("amazon-cart", JSON.stringify(cart));
+}
+
+export function getItems() {
+
+  return cart;
+}
 
 export function getItemFromCartByProductId(id) {
   return cart.find(x => x.productId == id)
