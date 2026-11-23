@@ -16,3 +16,11 @@ export function getProductById(id) {
 export function getTotalItemsInCart() {
   return cart.reduce((total, item) => total + item.quantity, 0);
 }
+
+export function removeItemFromCartByProductId(productId) {
+  // console.log(`removeItemFromCartByProductId: productId=${productId}`);
+  const index = cart.findIndex(x => x.productId === productId);
+  if (index !== -1) {
+    cart.splice(index, 1);
+  }
+}
