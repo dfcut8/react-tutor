@@ -13,10 +13,6 @@ export function addItemToCartByProductId(productId) {
   saveCart();
 }
 
-// export function getItems() {
-//   return cart;
-// }
-
 export function getItemFromCartByProductId(id) {
   return cart.find(x => x.productId == id)
 }
