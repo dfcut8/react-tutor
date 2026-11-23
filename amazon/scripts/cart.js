@@ -9,7 +9,7 @@ export const cart = [
   }
 ];
 
-export function getProductById(id) {
+export function getItemFromCartByProductId(id) {
   return cart.find(x => x.productId == id)
 }
 

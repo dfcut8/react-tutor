@@ -1,5 +1,5 @@
 import products from "../data/products.js";
-import { cart, getProductById, getTotalItemsInCart } from './cart.js';
+import { cart, getItemFromCartByProductId, getTotalItemsInCart } from './cart.js';
 import { formatCurrency } from "./utils/money.js";
 
 const productsRoot = document.querySelector(".js-products-grid");
@@ -62,7 +62,7 @@ products.forEach(p => {
 document.querySelectorAll(".js-add-to-cart-button").forEach(b => {
   b.addEventListener("click", () => {
 
-    let product = getProductById(b.dataset.productId);
+    let product = getItemFromCartByProductId(b.dataset.productId);
     if (product) {
       product.quantity++;
     } else {
