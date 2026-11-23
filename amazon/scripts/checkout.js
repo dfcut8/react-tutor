@@ -1,5 +1,6 @@
 import products from "../data/products.js";
 import { cart } from "./cart.js";
+import { formatCurrency } from "./utils/money.js";
 
 const orderSummaryRoot = document.querySelector(".js-order-summary");
 cart.forEach(item => {
@@ -18,7 +19,7 @@ cart.forEach(item => {
                 ${p.name}
               </div>
               <div class="product-price">
-                $${(p.priceCents / 100).toFixed(2)}
+                $${formatCurrency(p.priceCents)}
               </div>
               <div class="product-quantity">
                 <span>
