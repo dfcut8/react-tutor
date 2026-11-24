@@ -1,11 +1,10 @@
 import dayjs from "https://unpkg.com/dayjs@1.8.9/esm/index.js";
+import deliveryOptions from "../data/deliveryOptions.js";
 import products from "../data/products.js";
 import { cart, getTotalItemsInCart, removeItemFromCartByProductId, updateItemFromCartByProductId } from "./cart.js";
 import { formatCurrency } from "./utils/money.js";
 
 const now = dayjs();
-const delivery7d = now.add(7, 'days');
-console.log(delivery7d.format('dddd, MMMM D'));
 
 const orderSummaryRoot = document.querySelector(".js-order-summary");
 cart.forEach(item => {
@@ -45,47 +44,35 @@ cart.forEach(item => {
             </div>
 
             <div class="delivery-options">
-              <div class="delivery-options-title">
+              <div class="delivery-options-title js-delivery-options-title">
                 Choose a delivery option:
-              </div>
-
-              <div class="delivery-option">
-                <input type="radio" class="delivery-option-input" name="delivery-option-${p.id}">
-                <div>
-                  <div class="delivery-option-date">
-                    Tuesday, June 21
-                  </div>
-                  <div class="delivery-option-price">
-                    FREE Shipping
-                  </div>
-                </div>
-              </div>
-              <div class="delivery-option">
-                <input type="radio" checked class="delivery-option-input" name="delivery-option-${p.id}">
-                <div>
-                  <div class="delivery-option-date">
-                    Wednesday, June 15
-                  </div>
-                  <div class="delivery-option-price">
-                    $4.99 - Shipping
-                  </div>
-                </div>
-              </div>
-              <div class="delivery-option">
-                <input type="radio" class="delivery-option-input" name="delivery-option-${p.id}">
-                <div>
-                  <div class="delivery-option-date">
-                    Monday, June 13
-                  </div>
-                  <div class="delivery-option-price">
-                    $9.99 - Shipping
-                  </div>
-                </div>
+                ${renderDeliveryOptions(p.id, item)}
               </div>
             </div>
           </div>
-        </div>`
+        </div> `
 });
+
+function renderDeliveryOptions(productId, item) {
+  let deliveryOptionsHTML = "";
+  deliveryOptions.forEach(o => {
+    deliveryOptionsHTML += `<div class="delivery-option">
+                <input type="radio"
+                  checked=${o.id === item.deliveryOptionId}
+                  class="delivery-option-input"
+                  name="delivery-option-${productId}">
+                <div>
+                  <div class="delivery-option-date">
+                    ${now.add(o.deliveryDays, "days").format('dddd, MMMM D')}
+                  </div>
+                  <div class="delivery-option-price">
+                    ${o.priceCents === 0 ? "FREE Shipping" : `$${formatCurrency(o.priceCents)} - Shipping`}
+                  </div>
+                </div>
+              </div>`;
+  });
+  return deliveryOptionsHTML;
+}
 
 // add event listener to all delete links
 const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
@@ -111,10 +98,10 @@ updateButtons.forEach(b => b.addEventListener("click", () => {
 
 function renderUpdateInputHtml(productId, quantity) {
   const updateInputHTML = `
-  <input type="number" class="quantity-value js-quantity-value-${productId}"
-    data-product-id="${productId}" name="quantity-edit-${productId}" value=${quantity}>
-  <button class="quantity-save js-quantity-save-${productId}"
-    data-product-id=${productId}">save</button>`
+<input type="number" class="quantity-value js-quantity-value-${productId}"
+    data-product-id="${productId}" name="quantity-edit-${productId}" value=${quantity} >
+<button class="quantity-save js-quantity-save-${productId}"
+  data-product-id=${productId}">save</button>`
   const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
   quantityLabelRoot.innerHTML = updateInputHTML;
   const quantityInputRoot = document.querySelector(`.js-quantity-value-${productId}`);
