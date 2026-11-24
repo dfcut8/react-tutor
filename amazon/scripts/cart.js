@@ -8,7 +8,7 @@ export function addItemToCartByProductId(productId) {
   if (item) {
     item.quantity++;
   } else {
-    cart.push({ productId: productId, quantity: 1 });
+    cart.push({ productId: productId, quantity: 1, deliveryOptionId: "0" });
   }
   saveCart();
 }

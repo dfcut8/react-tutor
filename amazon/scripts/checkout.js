@@ -1,3 +1,4 @@
+import dayjs from "https://unpkg.com/dayjs@1.8.9/esm/index.js";
 import products from "../data/products.js";
 import { cart, getTotalItemsInCart, removeItemFromCartByProductId, updateItemFromCartByProductId } from "./cart.js";
 import { formatCurrency } from "./utils/money.js";
