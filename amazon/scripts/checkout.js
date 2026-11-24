@@ -1,7 +1,13 @@
 import dayjs from "https://unpkg.com/dayjs@1.8.9/esm/index.js";
 import deliveryOptions from "../data/deliveryOptions.js";
 import products from "../data/products.js";
-import { cart, getTotalItemsInCart, removeItemFromCartByProductId, updateItemFromCartByProductId } from "./cart.js";
+import {
+  cart,
+  getTotalItemsInCart,
+  removeItemFromCartByProductId,
+  updateDeliveryOption,
+  updateItemFromCartByProductId
+} from "./cart.js";
 import { formatCurrency } from "./utils/money.js";
 
 const now = dayjs();
@@ -58,13 +64,14 @@ function renderSelectedDeliveryDate(item) {
   if (delivery !== null) {
     return now.add(delivery.deliveryDays, "days").format('dddd, MMMM D');
   }
-
 }
 
 function renderDeliveryOptions(productId, item) {
   let deliveryOptionsHTML = "";
   deliveryOptions.forEach(o => {
-    deliveryOptionsHTML += `<div class="delivery-option">
+    deliveryOptionsHTML += `<div class="delivery-option js-delivery-option"
+      data-product-id=${productId}
+      data-delivery-option-id=${o.id}>
                 <input type="radio"
                   ${o.id === item.deliveryOptionId ? "checked" : ""}
                   class="delivery-option-input"
@@ -138,3 +145,13 @@ function updateSummary() {
   const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
   checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
 };
+
+// delivery options event listeners
+document.querySelectorAll(".js-delivery-option").forEach(el => {
+  el.addEventListener("click", () => {
+    const productId = el.dataset.productId;
+    const deliveryOptionId = el.dataset.deliveryOptionId;
+    console.log(productId, deliveryOptionId);
+    updateDeliveryOption(productId, deliveryOptionId);
+  });
+});

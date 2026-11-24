@@ -38,6 +38,14 @@ export function updateItemFromCartByProductId(productId, quantity) {
   saveCart();
 }
 
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  const index = cart.findIndex(x => x.productId === productId);
+  if (index !== -1) {
+    cart[index].deliveryOptionId = deliveryOptionId;
+  }
+  saveCart();
+}
+
 function saveCart() {
   localStorage.setItem("amazon-cart", JSON.stringify(cart));
 }
