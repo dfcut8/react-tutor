@@ -115,20 +115,26 @@ function renderUpdateInputHtml(productId, quantity) {
   const quantityInputRoot = document.querySelector(`.js-quantity-value-${productId}`);
   document.querySelector(`.js-quantity-save-${productId}`).addEventListener("click", (e) => {
     const newQuantity = Number(quantityInputRoot.value);
-    updateItemFromCartByProductId(productId, newQuantity);
-    quantityLabelRoot.innerHTML = newQuantity;
-    currentUpdate.hidden = false;
+    updateAndRenderItem(quantityLabelRoot, productId, newQuantity);
   })
   quantityLabelRoot.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const newQuantity = Number(quantityInputRoot.value);
-      updateItemFromCartByProductId(productId, newQuantity);
-      quantityLabelRoot.innerHTML = newQuantity;
-      currentUpdate.hidden = false;
+      updateAndRenderItem(quantityLabelRoot, productId, newQuantity);
     }
   })
 }
 
+function updateAndRenderItem(label, productId, quantity,) {
+  updateItemFromCartByProductId(productId, quantity);
+  label.innerHTML = quantity;
+  currentUpdate.hidden = false;
+  updateSummary()
+}
+
 // handle checkout summary
-const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
-checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
+updateSummary();
+function updateSummary() {
+  const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
+  checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
+};
