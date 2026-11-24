@@ -22,16 +22,18 @@ cart.forEach(item => {
               </div>
               <div class="product-quantity">
                 <span>
-                  Quantity: <span class="quantity-label js-quantity-label-${p.id}">${item.quantity}</span>
+                  Quantity: <span class="quantity-label js-quantity-label-${p.id}">${item.quantity}
+                  </span>
                 </span>
                 <span
                   class="update-quantity-link js-update-quantity-link link-primary"
-                  data-product-id=${p.id} data-quantity=${item.quantity}>
+                  data-product-id="${p.id}"
+                  data-quantity="${item.quantity}">
                   Update
                 </span>
                 <span
                   class="delete-quantity-link js-delete-quantity-link link-primary"
-                  data-product-id=${p.id}>
+                  data-product-id="${p.id}">
                   Delete
                 </span>
               </div>
@@ -83,26 +85,50 @@ cart.forEach(item => {
 // add event listener to all delete links
 const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
 deleteButtons.forEach(b => b.addEventListener("click", () => {
+  const parent = b.parentNode;
   const productId = b.dataset.productId
   removeItemFromCartByProductId(productId);
   document.querySelectorAll(`.js-cart-item-container-${productId}`).forEach(e => e.remove());
 }))
 
 // add event listener to all update links
-
+let currentUpdate;
 const updateButtons = document.querySelectorAll(".js-update-quantity-link");
 updateButtons.forEach(b => b.addEventListener("click", () => {
 
   const productId = b.dataset.productId;
-  const quantity = b.dataset.quantity;
-  updateItemFromCartByProductId(productId, 1);
   const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
-  b.remove();
-  quantityLabelRoot.innerHTML = `
-  <input name="quantity-edit" value=${quantity}>
-  <button onclick="">save</button>`;
-}))
+  const quantity = Number(quantityLabelRoot.innerHTML);
+  renderUpdateInputHtml(productId, quantity);
+  currentUpdate = b;
+  b.hidden = true;
+}));
+
+function renderUpdateInputHtml(productId, quantity) {
+  const updateInputHTML = `
+  <input type="number" class="quantity-value js-quantity-value-${productId}"
+    data-product-id="${productId}" name="quantity-edit-${productId}" value=${quantity}>
+  <button class="quantity-save js-quantity-save-${productId}"
+    data-product-id=${productId}">save</button>`
+  const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
+  quantityLabelRoot.innerHTML = updateInputHTML;
+  const quantityInputRoot = document.querySelector(`.js-quantity-value-${productId}`);
+  document.querySelector(`.js-quantity-save-${productId}`).addEventListener("click", (e) => {
+    const newQuantity = Number(quantityInputRoot.value);
+    updateItemFromCartByProductId(productId, newQuantity);
+    quantityLabelRoot.innerHTML = newQuantity;
+    currentUpdate.hidden = false;
+  })
+  quantityLabelRoot.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const newQuantity = Number(quantityInputRoot.value);
+      updateItemFromCartByProductId(productId, newQuantity);
+      quantityLabelRoot.innerHTML = newQuantity;
+      currentUpdate.hidden = false;
+    }
+  })
+}
 
 // handle checkout summary
 const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
-checkoutSummaryRoot.innerHTML = `Checkout (<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
+checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
