@@ -58,7 +58,7 @@ function renderDeliveryOptions(productId, item) {
   deliveryOptions.forEach(o => {
     deliveryOptionsHTML += `<div class="delivery-option">
                 <input type="radio"
-                  checked=${o.id === item.deliveryOptionId}
+                  ${o.id === item.deliveryOptionId ? "checked" : ""}
                   class="delivery-option-input"
                   name="delivery-option-${productId}">
                 <div>
@@ -117,7 +117,7 @@ function renderUpdateInputHtml(productId, quantity) {
   })
 }
 
-function updateAndRenderItem(label, productId, quantity,) {
+function updateAndRenderItem(label, productId, quantity) {
   updateItemFromCartByProductId(productId, quantity);
   label.innerHTML = quantity;
   currentUpdate.hidden = false;
