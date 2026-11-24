@@ -30,6 +30,14 @@ export function removeItemFromCartByProductId(productId) {
   saveCart();
 }
 
+export function updateItemFromCartByProductId(productId, quantity) {
+  const index = cart.findIndex(x => x.productId === productId);
+  if (index !== -1) {
+    cart[index].quantity = quantity;
+  }
+  saveCart();
+}
+
 function saveCart() {
   localStorage.setItem("amazon-cart", JSON.stringify(cart));
 }

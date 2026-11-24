@@ -1,5 +1,5 @@
 import products from "../data/products.js";
-import { cart, removeItemFromCartByProductId } from "./cart.js";
+import { cart, getTotalItemsInCart, removeItemFromCartByProductId, updateItemFromCartByProductId } from "./cart.js";
 import { formatCurrency } from "./utils/money.js";
 
 const orderSummaryRoot = document.querySelector(".js-order-summary");
@@ -22,9 +22,11 @@ cart.forEach(item => {
               </div>
               <div class="product-quantity">
                 <span>
-                  Quantity: <span class="quantity-label">${item.quantity}</span>
+                  Quantity: <span class="quantity-label js-quantity-label-${p.id}">${item.quantity}</span>
                 </span>
-                <span class="update-quantity-link js-update-quantity-link link-primary">
+                <span
+                  class="update-quantity-link js-update-quantity-link link-primary"
+                  data-product-id=${p.id} data-quantity=${item.quantity}>
                   Update
                 </span>
                 <span
@@ -78,9 +80,29 @@ cart.forEach(item => {
         </div>`
 });
 
+// add event listener to all delete links
 const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
 deleteButtons.forEach(b => b.addEventListener("click", () => {
   const productId = b.dataset.productId
   removeItemFromCartByProductId(productId);
   document.querySelectorAll(`.js-cart-item-container-${productId}`).forEach(e => e.remove());
 }))
+
+// add event listener to all update links
+
+const updateButtons = document.querySelectorAll(".js-update-quantity-link");
+updateButtons.forEach(b => b.addEventListener("click", () => {
+
+  const productId = b.dataset.productId;
+  const quantity = b.dataset.quantity;
+  updateItemFromCartByProductId(productId, 1);
+  const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
+  b.remove();
+  quantityLabelRoot.innerHTML = `
+  <input name="quantity-edit" value=${quantity}>
+  <button onclick="">save</button>`;
+}))
+
+// handle checkout summary
+const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
+checkoutSummaryRoot.innerHTML = `Checkout (<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
