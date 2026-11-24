@@ -11,7 +11,7 @@ cart.forEach(item => {
   const p = products.find(x => x.id === item.productId);
   orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.id}">
           <div class="delivery-date">
-            Delivery date: Wednesday, June 15
+            Delivery date: ${renderSelectedDeliveryDate(item)}
           </div>
 
           <div class="cart-item-details-grid">
@@ -52,6 +52,14 @@ cart.forEach(item => {
           </div>
         </div> `
 });
+
+function renderSelectedDeliveryDate(item) {
+  const delivery = deliveryOptions.find(x => x.id === item.deliveryOptionId)
+  if (delivery !== null) {
+    return now.add(delivery.deliveryDays, "days").format('dddd, MMMM D');
+  }
+
+}
 
 function renderDeliveryOptions(productId, item) {
   let deliveryOptionsHTML = "";
