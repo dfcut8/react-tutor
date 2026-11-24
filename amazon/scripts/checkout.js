@@ -2,6 +2,10 @@ import products from "../data/products.js";
 import { cart, getTotalItemsInCart, removeItemFromCartByProductId, updateItemFromCartByProductId } from "./cart.js";
 import { formatCurrency } from "./utils/money.js";
 
+const now = dayjs();
+const delivery7d = now.add(7, 'days');
+console.log(delivery7d.format('dddd, MMMM D'));
+
 const orderSummaryRoot = document.querySelector(".js-order-summary");
 cart.forEach(item => {
   const p = products.find(x => x.id === item.productId);
