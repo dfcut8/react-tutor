@@ -8,6 +8,7 @@ export function renderPaymentSummary() {
 
   // hardcode for now
   const tax = 10;
+
   let itemsTotalCents = 0;
   let deliveryTotalCents = 0;
   let totalBeforeTaxCents = 0;
