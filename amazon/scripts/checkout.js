@@ -12,10 +12,12 @@ import { formatCurrency } from "./utils/money.js";
 
 const now = dayjs();
 
-const orderSummaryRoot = document.querySelector(".js-order-summary");
-cart.forEach(item => {
-  const p = products.find(x => x.id === item.productId);
-  orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.id}">
+function renderCheckout() {
+  const orderSummaryRoot = document.querySelector(".js-order-summary");
+  orderSummaryRoot.innerHTML = "";
+  cart.forEach(item => {
+    const p = products.find(x => x.id === item.productId);
+    orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.id}">
           <div class="delivery-date">
             Delivery date: ${renderSelectedDeliveryDate(item)}
           </div>
@@ -57,19 +59,20 @@ cart.forEach(item => {
             </div>
           </div>
         </div> `
-});
+  });
 
-function renderSelectedDeliveryDate(item) {
-  const delivery = deliveryOptions.find(x => x.id === item.deliveryOptionId)
-  if (delivery !== null) {
-    return now.add(delivery.deliveryDays, "days").format('dddd, MMMM D');
+  function renderSelectedDeliveryDate(item) {
+    const delivery = deliveryOptions.find(x => x.id === item.deliveryOptionId)
+    if (delivery !== null) {
+      return now.add(delivery.deliveryDays, "days").format('dddd, MMMM D');
+    }
   }
-}
 
-function renderDeliveryOptions(productId, item) {
-  let deliveryOptionsHTML = "";
-  deliveryOptions.forEach(o => {
-    deliveryOptionsHTML += `<div class="delivery-option js-delivery-option"
+  function renderDeliveryOptions(productId, item) {
+    console.log("renderDeliveryOptions");
+    let deliveryOptionsHTML = "";
+    deliveryOptions.forEach(o => {
+      deliveryOptionsHTML += `<div class="delivery-option js-delivery-option"
       data-product-id=${productId}
       data-delivery-option-id=${o.id}>
                 <input type="radio"
@@ -85,73 +88,75 @@ function renderDeliveryOptions(productId, item) {
                   </div>
                 </div>
               </div>`;
-  });
-  return deliveryOptionsHTML;
-}
+    });
+    return deliveryOptionsHTML;
+  }
 
-// add event listener to all delete links
-const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
-deleteButtons.forEach(b => b.addEventListener("click", () => {
-  const parent = b.parentNode;
-  const productId = b.dataset.productId
-  removeItemFromCartByProductId(productId);
-  document.querySelectorAll(`.js-cart-item-container-${productId}`).forEach(e => e.remove());
-}))
+  // add event listener to all delete links
+  const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
+  deleteButtons.forEach(b => b.addEventListener("click", () => {
+    const parent = b.parentNode;
+    const productId = b.dataset.productId
+    removeItemFromCartByProductId(productId);
+    document.querySelectorAll(`.js-cart-item-container-${productId}`).forEach(e => e.remove());
+  }))
 
-// add event listener to all update links
-let currentUpdate;
-const updateButtons = document.querySelectorAll(".js-update-quantity-link");
-updateButtons.forEach(b => b.addEventListener("click", () => {
+  // add event listener to all update links
+  let currentUpdate;
+  const updateButtons = document.querySelectorAll(".js-update-quantity-link");
+  updateButtons.forEach(b => b.addEventListener("click", () => {
 
-  const productId = b.dataset.productId;
-  const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
-  const quantity = Number(quantityLabelRoot.innerHTML);
-  renderUpdateInputHtml(productId, quantity);
-  currentUpdate = b;
-  b.hidden = true;
-}));
+    const productId = b.dataset.productId;
+    const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
+    const quantity = Number(quantityLabelRoot.innerHTML);
+    renderUpdateInputHtml(productId, quantity);
+    currentUpdate = b;
+    b.hidden = true;
+  }));
 
-function renderUpdateInputHtml(productId, quantity) {
-  const updateInputHTML = `
+  function renderUpdateInputHtml(productId, quantity) {
+    const updateInputHTML = `
 <input type="number" class="quantity-value js-quantity-value-${productId}"
     data-product-id="${productId}" name="quantity-edit-${productId}" value=${quantity} >
 <button class="quantity-save js-quantity-save-${productId}"
   data-product-id=${productId}">save</button>`
-  const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
-  quantityLabelRoot.innerHTML = updateInputHTML;
-  const quantityInputRoot = document.querySelector(`.js-quantity-value-${productId}`);
-  document.querySelector(`.js-quantity-save-${productId}`).addEventListener("click", (e) => {
-    const newQuantity = Number(quantityInputRoot.value);
-    updateAndRenderItem(quantityLabelRoot, productId, newQuantity);
-  })
-  quantityLabelRoot.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
+    const quantityLabelRoot = document.querySelector(`.js-quantity-label-${productId}`);
+    quantityLabelRoot.innerHTML = updateInputHTML;
+    const quantityInputRoot = document.querySelector(`.js-quantity-value-${productId}`);
+    document.querySelector(`.js-quantity-save-${productId}`).addEventListener("click", (e) => {
       const newQuantity = Number(quantityInputRoot.value);
       updateAndRenderItem(quantityLabelRoot, productId, newQuantity);
-    }
-  })
-}
+    })
+    quantityLabelRoot.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const newQuantity = Number(quantityInputRoot.value);
+        updateAndRenderItem(quantityLabelRoot, productId, newQuantity);
+      }
+    })
+  }
 
-function updateAndRenderItem(label, productId, quantity) {
-  updateItemFromCartByProductId(productId, quantity);
-  label.innerHTML = quantity;
-  currentUpdate.hidden = false;
-  updateSummary()
-}
+  function updateAndRenderItem(label, productId, quantity) {
+    updateItemFromCartByProductId(productId, quantity);
+    label.innerHTML = quantity;
+    currentUpdate.hidden = false;
+    updateSummary()
+  }
 
-// handle checkout summary
-updateSummary();
-function updateSummary() {
-  const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
-  checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
+  // handle checkout summary
+  updateSummary();
+  function updateSummary() {
+    const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
+    checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
+  };
+
+  // delivery options event listeners
+  document.querySelectorAll(".js-delivery-option").forEach(el => {
+    el.addEventListener("click", () => {
+      const { productId, deliveryOptionId } = el.dataset;
+      updateDeliveryOption(productId, deliveryOptionId);
+      renderCheckout();
+    });
+  });
 };
 
-// delivery options event listeners
-document.querySelectorAll(".js-delivery-option").forEach(el => {
-  el.addEventListener("click", () => {
-    const productId = el.dataset.productId;
-    const deliveryOptionId = el.dataset.deliveryOptionId;
-    console.log(productId, deliveryOptionId);
-    updateDeliveryOption(productId, deliveryOptionId);
-  });
-});
+renderCheckout();
