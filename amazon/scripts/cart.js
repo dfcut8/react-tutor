@@ -6,6 +6,7 @@ export function loadCart() {
     cart = [];
   }
 }
+loadCart()
 
 export function addItemToCartByProductId(productId) {
   const item = cart.find(x => x.productId === productId);
