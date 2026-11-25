@@ -9,6 +9,7 @@ import {
   updateItemFromCartByProductId
 } from "../cart.js";
 import { formatCurrency } from "../utils/money.js";
+import { renderPaymentSummary } from "./payment-summary.js";
 
 const now = dayjs();
 
@@ -154,6 +155,7 @@ export function renderCheckout() {
       const { productId, deliveryOptionId } = el.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderCheckout();
+      renderPaymentSummary();
     });
   });
 };

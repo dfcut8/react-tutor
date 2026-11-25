@@ -17,3 +17,7 @@ const deliveryOptions = [
 ];
 
 export default deliveryOptions;
+
+export function getDeliveryOptionById(id) {
+  return deliveryOptions.find(x => x.id === id);
+}

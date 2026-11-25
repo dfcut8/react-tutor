@@ -1,11 +1,19 @@
+import { getDeliveryOptionById } from "../../data/deliveryOptions.js";
+import { getProductById } from "../../data/products.js";
 import * as cart from "../cart.js";
+import { formatCurrency } from "../utils/money.js";
+
 export function renderPaymentSummary() {
   const root = document.querySelector(".js-payment-summary");
 
+  let itemsTotalCents = 0;
   const items = cart.cart;
   items.forEach(i => {
-    console.log(i.productId, i.quantity, i.priceCents);
-    console.log();
+    const p = getProductById(i.productId);
+    const d = getDeliveryOptionById(i.deliveryOptionId);
+    console.log(i.productId, p.name, i.quantity, d.id, p.priceCents);
+    itemsTotalCents += i.quantity * p.priceCents;
+
   });
 
   const html = `<div class="payment-summary-title">
@@ -14,7 +22,7 @@ export function renderPaymentSummary() {
 
         <div class="payment-summary-row">
           <div>Items (3):</div>
-          <div class="payment-summary-money">$42.75</div>
+          <div class="payment-summary-money">$${formatCurrency(itemsTotalCents)}</div>
         </div>
 
         <div class="payment-summary-row">
