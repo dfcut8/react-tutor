@@ -14,6 +14,7 @@ import { renderPaymentSummary } from "./payment-summary.js";
 const now = dayjs();
 
 export function renderCheckout() {
+  renderPaymentSummary();
   const orderSummaryRoot = document.querySelector(".js-order-summary");
   orderSummaryRoot.innerHTML = "";
   cart.forEach(item => {
@@ -95,10 +96,11 @@ export function renderCheckout() {
   // add event listener to all delete links
   const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
   deleteButtons.forEach(b => b.addEventListener("click", () => {
-    const parent = b.parentNode;
     const productId = b.dataset.productId
     removeItemFromCartByProductId(productId);
-    document.querySelectorAll(`.js-cart-item-container-${productId}`).forEach(e => e.remove());
+    document.querySelectorAll(`.js-cart-item-container-${productId}`)
+      .forEach(e => e.remove());
+    renderCheckout();
   }))
 
   // add event listener to all update links
@@ -139,7 +141,8 @@ export function renderCheckout() {
     updateItemFromCartByProductId(productId, quantity);
     label.innerHTML = quantity;
     currentUpdate.hidden = false;
-    updateSummary()
+    updateSummary();
+    renderCheckout();
   }
 
   // handle checkout summary
@@ -155,7 +158,6 @@ export function renderCheckout() {
       const { productId, deliveryOptionId } = el.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderCheckout();
-      renderPaymentSummary();
     });
   });
 };

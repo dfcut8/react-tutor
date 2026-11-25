@@ -13,7 +13,6 @@ export function renderPaymentSummary() {
     const d = getDeliveryOptionById(i.deliveryOptionId);
     console.log(i.productId, p.name, i.quantity, d.id, p.priceCents);
     itemsTotalCents += i.quantity * p.priceCents;
-
   });
 
   const html = `<div class="payment-summary-title">
