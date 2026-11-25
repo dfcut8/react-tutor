@@ -1,6 +1,10 @@
-export let cart = JSON.parse(localStorage.getItem("amazon-cart"));
-if (cart === null) {
-  cart = [];
+export let cart = [];
+
+export function loadCart() {
+  cart = JSON.parse(localStorage.getItem("amazon-cart"));
+  if (cart === null) {
+    cart = [];
+  }
 }
 
 export function addItemToCartByProductId(productId) {
