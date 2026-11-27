@@ -5,7 +5,7 @@ class Product {
   #rating;
   #priceCents;
   #keywords;
-  name = 'product';
+  type1 = 'product';
 
   constructor(productDetails) {
     this.#id = productDetails.id;
@@ -20,7 +20,10 @@ class Product {
     return this.#name;
   }
 
-  getNameArrow = () => this.name;
+  getType() {
+    return this.type1;
+  }
+  getTypeArrow = () => this.type1;
 }
 
 class Clothing extends Product {
@@ -28,7 +31,7 @@ class Clothing extends Product {
   constructor(productDetails) {
     super(productDetails);
     this.#size = productDetails.size;
-    this.name = 'clothing';
+    this.type = 'clothing';
   }
 
   getName() {
@@ -76,26 +79,26 @@ const product1 = new Product(
   }
 )
 
-console.log(product1.getName());
-console.log(product1.getNameArrow());
+console.log(product1.getType());
+console.log(product1.getTypeArrow());
 // console.log(product1.getSize()); // error
 console.log(clothing1.getName());
 console.log(clothing1.getSize());
 
 name = 'r'
-console.log(clothing1.getNameArrow());
+console.log(clothing1.getTypeArrow());
 clothing1.name = 'c1';
-console.log(clothing1.getNameArrow());
+console.log(clothing1.getTypeArrow());
 
 
 const anotherObject = {
-  name: "another",
-  regular: product1.getName,
-  arrow: product1.getNameArrow
+  type1: "another",
+  regular: product1.getType,
+  arrow: product1.getTypeArrow
 };
 
-// console.log(anotherObject.regular()); // another
-// console.log(anotherObject.arrow());   // product
+console.log(anotherObject.regular()); // another
+console.log(anotherObject.arrow());   // product
 
 
 //
