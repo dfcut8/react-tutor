@@ -96,17 +96,17 @@ const product1 = new Product(
 // console.log(clothing1.getTypeArrow());
 
 
-const anotherObject = {
-  type1: "another",
-  regular: product1.getType,
-  arrow: product1.getTypeArrow,
-  sayThis: function () {
-    console.log(this);
-  }
-};
+// const anotherObject = {
+//   type1: "another",
+//   regular: product1.getType,
+//   arrow: product1.getTypeArrow,
+//   sayThis: function () {
+//     console.log(this);
+//   }
+// };
 
-console.log(anotherObject.regular()); // another
-console.log(anotherObject.arrow());   // product
+// console.log(anotherObject.regular()); // another
+// console.log(anotherObject.arrow());   // product
 
 // console.log(this);
 // console.log(anotherObject.sayThis());
