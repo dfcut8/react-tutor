@@ -5,6 +5,7 @@ class Product {
   #rating;
   #priceCents;
   #keywords;
+  name = 'product';
 
   constructor(productDetails) {
     this.#id = productDetails.id;
@@ -18,6 +19,8 @@ class Product {
   getName() {
     return this.#name;
   }
+
+  getNameArrow = () => this.name;
 }
 
 class Clothing extends Product {
@@ -25,6 +28,7 @@ class Clothing extends Product {
   constructor(productDetails) {
     super(productDetails);
     this.#size = productDetails.size;
+    this.name = 'clothing';
   }
 
   getName() {
@@ -73,9 +77,15 @@ const product1 = new Product(
 )
 
 console.log(product1.getName());
+console.log(product1.getNameArrow());
 // console.log(product1.getSize()); // error
 console.log(clothing1.getName());
 console.log(clothing1.getSize());
+
+name = 'r'
+console.log(clothing1.getNameArrow());
+const bla = clothing1.getNameArrow;
+bla();
 
 
 
