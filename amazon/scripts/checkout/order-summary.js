@@ -1,13 +1,7 @@
 import dayjs from "https://unpkg.com/dayjs@1.8.9/esm/index.js";
 import deliveryOptions from "../../data/deliveryOptions.js";
 import products from "../../data/products.js";
-import {
-  cart,
-  getTotalItemsInCart,
-  removeItemFromCartByProductId,
-  updateDeliveryOption,
-  updateItemFromCartByProductId
-} from "../cart.js";
+import { cart } from "../cart.js";
 import { formatCurrency } from "../utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
@@ -97,7 +91,7 @@ export function renderCheckout() {
   const deleteButtons = document.querySelectorAll(".js-delete-quantity-link");
   deleteButtons.forEach(b => b.addEventListener("click", () => {
     const productId = b.dataset.productId
-    removeItemFromCartByProductId(productId);
+    cart.removeItemFromCartByProductId(productId);
     document.querySelectorAll(`.js-cart-item-container-${productId}`)
       .forEach(e => e.remove());
     renderCheckout();
@@ -138,7 +132,7 @@ export function renderCheckout() {
   }
 
   function updateAndRenderItem(label, productId, quantity) {
-    updateItemFromCartByProductId(productId, quantity);
+    cart.updateItemFromCartByProductId(productId, quantity);
     label.innerHTML = quantity;
     currentUpdate.hidden = false;
     updateSummary();
@@ -149,14 +143,14 @@ export function renderCheckout() {
   updateSummary();
   function updateSummary() {
     const checkoutSummaryRoot = document.querySelector(".js-checkout-header-middle-section");
-    checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${getTotalItemsInCart()} items</a>)`
+    checkoutSummaryRoot.innerHTML = `Checkout(<a class="return-to-home-link" href="amazon.html">${cart.getTotalItemsInCart()} items</a>)`
   };
 
   // delivery options event listeners
   document.querySelectorAll(".js-delivery-option").forEach(el => {
     el.addEventListener("click", () => {
       const { productId, deliveryOptionId } = el.dataset;
-      updateDeliveryOption(productId, deliveryOptionId);
+      cart.updateDeliveryOption(productId, deliveryOptionId);
       renderCheckout();
     });
   });
