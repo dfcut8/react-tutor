@@ -30,7 +30,7 @@ class Product {
   }
 
   getPriceCents() {
-    return formatCurrency(this.#priceCents);
+    return formatCurrency(this.#priceCents * 100);
   }
 
   getRating() {
@@ -74,5 +74,5 @@ export function loadProducts(callback) {
 }
 
 export function getProductById(id) {
-  return products.find(x => x.id === id);
+  return products.find(x => x.getId() === id);
 }

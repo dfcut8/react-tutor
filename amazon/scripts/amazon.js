@@ -56,7 +56,7 @@ function renderProducts() {
 
           <button
             class="js-add-to-cart-button add-to-cart-button button-primary"
-            data-product-id="${p.id}">
+            data-product-id="${p.getId()}">
             Add to Cart
           </button>
         </div>`

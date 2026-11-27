@@ -1,6 +1,6 @@
 import dayjs from "https://unpkg.com/dayjs@1.8.9/esm/index.js";
 import deliveryOptions from "../../data/deliveryOptions.js";
-import products from "../../data/products.js";
+import { getProductById } from "../../data/products.js";
 import { cart } from "../cart@2.js";
 import { formatCurrency } from "../utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
@@ -12,7 +12,8 @@ export function renderCheckout() {
   const orderSummaryRoot = document.querySelector(".js-order-summary");
   orderSummaryRoot.innerHTML = "";
   cart.getItems().forEach(item => {
-    const p = products.find(x => x.id === item.productId);
+    const p = getProductById(item.productId);
+    console.log(p);
     if (p === undefined) {
       return;
     }
