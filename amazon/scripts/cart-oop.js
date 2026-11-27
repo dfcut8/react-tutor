@@ -1,9 +1,10 @@
-const localStorageKeyName = 'amazon-cart-oop';
+
 export class Cart {
+  static #localStorageKeyName = 'amazon-cart-oop';
   cart = [];
 
   loadCart() {
-    cart = JSON.parse(localStorage.getItem(localStorageKeyName));
+    cart = JSON.parse(localStorage.getItem(Cart.#localStorageKeyName));
     if (cart === null) {
       cart = [];
     }
