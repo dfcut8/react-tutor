@@ -1,3 +1,89 @@
+class Product {
+  #id;
+  #image;
+  #name;
+  #rating;
+  #priceCents;
+  #keywords;
+
+  constructor(productDetails) {
+    this.#id = productDetails.id;
+    this.#image = productDetails.image;
+    this.#name = productDetails.name;
+    this.#rating = productDetails.rating;
+    this.#priceCents = productDetails.priceCents;
+    this.#keywords = productDetails.keywords;
+  }
+
+  getName() {
+    return this.#name;
+  }
+}
+
+class Clothing extends Product {
+  #size;
+  constructor(productDetails) {
+    super(productDetails);
+    this.#size = productDetails.size;
+  }
+
+  getName() {
+    return super.getName() + ` (${this.#size})`;
+  }
+
+  getSize() {
+    return this.#size;
+  }
+}
+
+const clothing1 = new Clothing(
+  {
+    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+    rating: {
+      stars: 4.5,
+      count: 87
+    },
+    priceCents: 1090,
+    keywords: [
+      "socks",
+      "sports",
+      "apparel"
+    ],
+    size: "2XL"
+  }
+)
+
+const product1 = new Product(
+  {
+    id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+    image: "images/products/intermediate-composite-basketball.jpg",
+    name: "Intermediate Size Basketball",
+    rating: {
+      stars: 4,
+      count: 127
+    },
+    priceCents: 2095,
+    keywords: [
+      "sports",
+      "basketballs"
+    ]
+  }
+)
+
+console.log(product1.getName());
+// console.log(product1.getSize()); // error
+console.log(clothing1.getName());
+console.log(clothing1.getSize());
+
+
+
+
+//
+
+
+
 const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
