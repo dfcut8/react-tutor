@@ -21,9 +21,14 @@ class Product {
   }
 
   getType() {
+    console.log(this);
     return this.type1;
   }
-  getTypeArrow = () => this.type1;
+
+  getTypeArrow = () => {
+    console.log(this);
+    return this.type1
+  };
 }
 
 class Clothing extends Product {
@@ -79,26 +84,32 @@ const product1 = new Product(
   }
 )
 
-console.log(product1.getType());
-console.log(product1.getTypeArrow());
-// console.log(product1.getSize()); // error
-console.log(clothing1.getName());
-console.log(clothing1.getSize());
+// console.log(product1.getType());
+// console.log(product1.getTypeArrow());
+// // console.log(product1.getSize()); // error
+// console.log(clothing1.getName());
+// console.log(clothing1.getSize());
 
-name = 'r'
-console.log(clothing1.getTypeArrow());
-clothing1.name = 'c1';
-console.log(clothing1.getTypeArrow());
+// name = 'r'
+// console.log(clothing1.getTypeArrow());
+// clothing1.name = 'c1';
+// console.log(clothing1.getTypeArrow());
 
 
 const anotherObject = {
   type1: "another",
   regular: product1.getType,
-  arrow: product1.getTypeArrow
+  arrow: product1.getTypeArrow,
+  sayThis: function () {
+    console.log(this);
+  }
 };
 
 console.log(anotherObject.regular()); // another
 console.log(anotherObject.arrow());   // product
+
+// console.log(this);
+// console.log(anotherObject.sayThis());
 
 
 //
