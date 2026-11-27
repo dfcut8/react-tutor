@@ -84,10 +84,18 @@ console.log(clothing1.getSize());
 
 name = 'r'
 console.log(clothing1.getNameArrow());
-const bla = clothing1.getNameArrow;
-bla();
+clothing1.name = 'c1';
+console.log(clothing1.getNameArrow());
 
 
+const anotherObject = {
+  name: "another",
+  regular: product1.getName,
+  arrow: product1.getNameArrow
+};
+
+// console.log(anotherObject.regular()); // another
+// console.log(anotherObject.arrow());   // product
 
 
 //
