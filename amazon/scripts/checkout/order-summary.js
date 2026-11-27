@@ -13,7 +13,6 @@ export function renderCheckout() {
   orderSummaryRoot.innerHTML = "";
   cart.getItems().forEach(item => {
     const p = getProductById(item.productId);
-    console.log(p);
     if (p === undefined) {
       return;
     }
