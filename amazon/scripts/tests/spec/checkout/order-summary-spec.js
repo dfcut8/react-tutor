@@ -1,4 +1,4 @@
-import { cart } from '../../../cart.js';
+import { cart } from '../../../cart@2.js';
 import { renderCheckout } from "../../../checkout/order-summary.js";
 
 describe("renderCheckout", () => {

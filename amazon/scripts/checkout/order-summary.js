@@ -1,7 +1,7 @@
 import dayjs from "https://unpkg.com/dayjs@1.8.9/esm/index.js";
 import deliveryOptions from "../../data/deliveryOptions.js";
 import products from "../../data/products.js";
-import { cart } from "../cart.js";
+import { cart } from "../cart@2.js";
 import { formatCurrency } from "../utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
@@ -11,7 +11,7 @@ export function renderCheckout() {
   renderPaymentSummary();
   const orderSummaryRoot = document.querySelector(".js-order-summary");
   orderSummaryRoot.innerHTML = "";
-  cart.forEach(item => {
+  cart.getItems().forEach(item => {
     const p = products.find(x => x.id === item.productId);
     orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.id}">
           <div class="delivery-date">

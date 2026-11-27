@@ -5,14 +5,8 @@ class Cart {
     this.localStorageKeyName = localStorageKeyName;
   }
 
-  loadCart() {
-    this.#cart = JSON.parse(localStorage.getItem(this.localStorageKeyName));
-    if (this.#cart === null) {
-      this.#cart = [];
-    }
-  }
-
   addItemToCartByProductId(productId) {
+    this.#loadCart();
     const item = this.#cart.find(x => x.productId === productId);
     if (item) {
       item.quantity++;
@@ -23,14 +17,22 @@ class Cart {
   }
 
   getItemFromCartByProductId(id) {
+    this.#loadCart();
     return this.#cart.find(x => x.productId == id)
   }
 
   getTotalItemsInCart() {
+    this.#loadCart();
     return this.#cart.reduce((total, item) => total + item.quantity, 0);
   }
 
+  getItems() {
+    this.#loadCart();
+    return this.#cart.slice();
+  }
+
   removeItemFromCartByProductId(productId) {
+    this.#loadCart();
     // console.log(`removeItemFromCartByProductId: productId=${productId}`);
     const index = this.#cart.findIndex(x => x.productId === productId);
     if (index !== -1) {
@@ -40,6 +42,7 @@ class Cart {
   }
 
   updateItemFromCartByProductId(productId, quantity) {
+    this.#loadCart();
     const index = this.#cart.findIndex(x => x.productId === productId);
     if (index !== -1) {
       this.#cart[index].quantity = quantity;
@@ -48,11 +51,20 @@ class Cart {
   }
 
   updateDeliveryOption(productId, deliveryOptionId) {
+    this.#loadCart();
     const index = this.#cart.findIndex(x => x.productId === productId);
     if (index !== -1) {
       this.#cart[index].deliveryOptionId = deliveryOptionId;
     }
     this.#saveCart();
+  }
+
+  #loadCart() {
+    this.#cart = JSON.parse(localStorage.getItem(this.localStorageKeyName));
+    if (this.#cart === null) {
+      this.#cart = [];
+    }
+    console.log("items: ", this.#cart);
   }
 
   #saveCart() {

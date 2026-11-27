@@ -1,6 +1,6 @@
 import { getDeliveryOptionById } from "../../data/deliveryOptions.js";
 import { getProductById } from "../../data/products.js";
-import { cart } from "../cart.js";
+import { cart } from "../cart@2.js";
 import { formatCurrency } from "../utils/money.js";
 
 export function renderPaymentSummary() {
@@ -16,8 +16,9 @@ export function renderPaymentSummary() {
   let totalCents = 0;
 
   // this is a bug
-  const items = cart;
-  items.forEach(i => {
+  const dItems = cart.getItems();
+  console.log(cart);
+  cart.getItems().forEach(i => {
     const p = getProductById(i.productId);
     const d = getDeliveryOptionById(i.deliveryOptionId);
     console.log(i.productId, p.name, i.quantity, d.id, p.priceCents);
