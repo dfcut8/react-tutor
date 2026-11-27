@@ -17,10 +17,13 @@ export function renderPaymentSummary() {
 
   cart.getItems().forEach(i => {
     const p = getProductById(i.productId);
+    if (p === undefined) {
+      return;
+    }
     const d = getDeliveryOptionById(i.deliveryOptionId);
 
     // console.log(i.productId, p.name, i.quantity, d.id, p.priceCents);
-    itemsTotalCents += i.quantity * p.priceCents;
+    itemsTotalCents += i.quantity * p.getPriceCents();
     deliveryTotalCents += d.priceCents;
   });
 

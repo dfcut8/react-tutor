@@ -13,35 +13,38 @@ export function renderCheckout() {
   orderSummaryRoot.innerHTML = "";
   cart.getItems().forEach(item => {
     const p = products.find(x => x.id === item.productId);
-    orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.id}">
+    if (p === undefined) {
+      return;
+    }
+    orderSummaryRoot.innerHTML += `<div class="cart-item-container js-cart-item-container-${p.getId()}">
           <div class="delivery-date">
             Delivery date: ${renderSelectedDeliveryDate(item)}
           </div>
 
           <div class="cart-item-details-grid">
-            <img class="product-image" src="${p.image}">
+            <img class="product-image" src="${p.getImage()}">
 
             <div class="cart-item-details">
               <div class="product-name">
-                ${p.name}
+                ${p.getName()}
               </div>
               <div class="product-price">
-                $${formatCurrency(p.priceCents)}
+                $${formatCurrency(p.getPriceCents())}
               </div>
               <div class="product-quantity">
                 <span>
-                  Quantity: <span class="quantity-label js-quantity-label-${p.id}">${item.quantity}
+                  Quantity: <span class="quantity-label js-quantity-label-${p.getId()}">${item.quantity}
                   </span>
                 </span>
                 <span
                   class="update-quantity-link js-update-quantity-link link-primary"
-                  data-product-id="${p.id}"
+                  data-product-id="${p.getId()}"
                   data-quantity="${item.quantity}">
                   Update
                 </span>
                 <span
                   class="delete-quantity-link js-delete-quantity-link link-primary"
-                  data-product-id="${p.id}">
+                  data-product-id="${p.getId()}">
                   Delete
                 </span>
               </div>
@@ -50,7 +53,7 @@ export function renderCheckout() {
             <div class="delivery-options">
               <div class="delivery-options-title js-delivery-options-title">
                 Choose a delivery option:
-                ${renderDeliveryOptions(p.id, item)}
+                ${renderDeliveryOptions(p.getId(), item)}
               </div>
             </div>
           </div>
