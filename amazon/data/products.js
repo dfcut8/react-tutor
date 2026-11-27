@@ -1,3 +1,5 @@
+import { formatCurrency } from "../scripts/utils/money.js";
+
 class Product {
   #id;
   #image;
@@ -5,7 +7,6 @@ class Product {
   #rating;
   #priceCents;
   #keywords;
-  type1 = 'product';
 
   constructor(productDetails) {
     this.#id = productDetails.id;
@@ -29,7 +30,11 @@ class Product {
   }
 
   getPriceCents() {
-    return this.#priceCents;
+    return formatCurrency(this.#priceCents);
+  }
+
+  getRating() {
+    return this.#rating;
   }
 }
 
@@ -49,19 +54,25 @@ class Clothing extends Product {
   }
 }
 
-const products = [];
+export let products = [];
 
-function loadProducts() {
+export function loadProducts(callback) {
   const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
   xhr.addEventListener('load', () => {
-    console.log(xhr.response);
+    // console.log(JSON.parse(xhr.response));
+    products = JSON.parse(xhr.response).map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+    console.log('products loaded successfully');
+    callback();
   });
-  xhr.open('GET', 'https://supersimpledevbackend.dev/products');
-
 }
 
 export function getProductById(id) {
   return products.find(x => x.id === id);
 }
-
-export default products;
