@@ -15,13 +15,11 @@ export function renderPaymentSummary() {
   let estimatedTaxCents = 0;
   let totalCents = 0;
 
-  // this is a bug
-  const dItems = cart.getItems();
-  console.log(cart);
   cart.getItems().forEach(i => {
     const p = getProductById(i.productId);
     const d = getDeliveryOptionById(i.deliveryOptionId);
-    console.log(i.productId, p.name, i.quantity, d.id, p.priceCents);
+
+    // console.log(i.productId, p.name, i.quantity, d.id, p.priceCents);
     itemsTotalCents += i.quantity * p.priceCents;
     deliveryTotalCents += d.priceCents;
   });
